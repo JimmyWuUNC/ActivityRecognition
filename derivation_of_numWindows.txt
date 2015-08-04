@@ -1,0 +1,49 @@
+Derivation of numWindows:
+
+W=windowWidth 		//width of one window
+S=windowStep 		//space between start of one window and start of next)
+R=rows 			//number of rows in the data
+N=window_number_of_current_window
+
+numWindows=N_max 	//if < N_max, could take more windows from the data. 
+			//if > N_max, index out of bounds error occurs
+
+N		windowStart		windowEnd
+_________________________________________________
+1		1			1+W
+2		1+S			1+S+W
+3		1+S+S			1+S+S+W
+4		1+S+S+S			1+S+S+S+W
+.		.			.
+.		.			.
+.		.			.
+N		1+(N-1)S		1+(N-1)S+W
+__________________________________________________
+
+
+Loop while windowEnd<=R		//if windowEnd>R, index out of bounds error occurs
+     while 1+(N-1)S+W<R		//replace formula for windowEnd
+
+
+1+(N-1)S+W<R 			//solve for N
+(N-1)S<R-W-1			//subtract W, 1 from both sides
+N-1<(R-W-1)/S			//divide both sides by S
+N<((R-W-1)/S) + 1		//add 1 to both sides
+
+
+N_max+1 = the_smallest_unacceptable_(integer)_N 	//N_max is an integer, so N_max+1 is the smallest INTEGER such that N<((R-W-1)/S)+1 is false.
+
+N_max + 1 = ceiling(((R-W-1)/S)+1) 	//ceiling to only allow integer solutions
+N_max + 1 = ceiling((R-W-1)/S) + 1	//ceil(X + integer) = ceil(X) + integer
+N_max = ceiling((R-W-1)/S) + 1 - 1 	//subtract 1 from both sides
+N_max= ceiling((R-W-1)/S)		//cancel out the +1/-1
+
+So:
+numWindows = ceiling((R-W-1)/S)		//numWindow=N_max
+
+
+
+In MATLAB code:
+
+intermediate = rows-windowWidth-1;
+numWindows = ceil(intermediate/windowStep);
