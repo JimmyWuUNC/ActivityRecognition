@@ -14,9 +14,13 @@ tableTrain = featureExtractionTrainFileWise(...
 %Import tableTrain, train a model, name your model 'trainedClassifier'
 classificationLearner;
 
-tableTest = featureExtractionTestFileWise('Test Sophia Situps Data.csv');
+%The following statement will create a visualization of the tree (assuming
+%a decisoin tree classifier is used)
+view(trainedClassifier, 'Mode', 'graph');
 
-tablePredict = predict(trainedClassifier, tableTest{:,trainedClassifier.PredictorNames});
+tableTest1 = featureExtractionTestFileWise('Test Sophia Situps.csv');
+tableTest2 = featureExtractionTestFileWise('Test Sophia Jumping Jacks with Pauses.csv');
 
-tableEvaluate = [tableTest tablePredict];
+tablePredict1 = predict(trainedClassifier, tableTest1{:,trainedClassifier.PredictorNames});
+tablePredict2 = predict(trainedClassifier, tableTest2{:,trainedClassifier.PredictorNames});
 
