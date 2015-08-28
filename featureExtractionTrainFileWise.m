@@ -11,6 +11,8 @@ for masterVariable=1:nargin;%Goes over all the files
     windowWidth=64;%vary this to vary the size of the window
     windowOverlap=0.5;
     windowStep=windowWidth*windowOverlap;
+    sampling_rate=25; %based on experimentation
+    timeExercisedInSeconds = zeros(nargin,1);
     table_x1 = [];
     table_y1 = [];
     table_z1 = [];
@@ -26,6 +28,7 @@ for masterVariable=1:nargin;%Goes over all the files
 
     [rows,~] = size(table_x1);
     
+    timeSpentExcercisingInSeconds(masterVariable,1) = rows / samplingRate;
     
     %Step 1a: Calculate acceleration for the data
     table_accel1=zeros(rows,1); %Pre-allocate an array of all zeroes to save compilation time.
